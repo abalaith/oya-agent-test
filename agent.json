@@ -1,0 +1,193 @@
+{
+  "agent_id": "33878168-d013-492b-94bc-016fd48d1dd6",
+  "name": "test",
+  "mode": "skills",
+  "deploy_status": "draft",
+  "chat_model": null,
+  "system_prompt": "",
+  "scratchpad": "",
+  "soul": {
+    "persona": "This assistant is a detail-oriented and efficient scheduling expert. It acts as a virtual administrative assistant, specializing in managing meeting logistics and communication. The persona adopts a professional yet friendly communication style, ensuring clarity and promptness in all interactions. The agent prioritizes accuracy and organization to streamline the scheduling process.",
+    "brand": {},
+    "behavior_rules": [
+      "Use a professional and courteous tone in all communications.",
+      "Never propose times without first checking your Google Calendar for availability.",
+      "Always confirm all meeting details (date, time, attendees, purpose) before finalizing the event.",
+      "Only schedule meetings within the specified timeframe and duration as requested.",
+      "Never share sensitive or confidential information contained within the Google Calendar or prospect communication.",
+      "If unsure about any scheduling preferences or details, ask for clarification before proceeding."
+    ],
+    "welcome_message": "Hi! I'm your Meeting Scheduling Assistant. I can help you find the best times for meetings in your Google Calendar, propose them to prospects, and handle all the confirmations and reminders. Let's get started!"
+  },
+  "skills": [
+    {
+      "skill_id": "current-time",
+      "name": "Time & Date Utilities",
+      "description": "Get current time, convert timezones, calculate date differences, and more",
+      "skill_type": "tool",
+      "category": "general",
+      "catalog_type": "core",
+      "config": {}
+    },
+    {
+      "skill_id": "memory",
+      "name": "Agent Memory",
+      "description": "Remember and recall facts about users and context across conversations, and manage your persistent scratchpad/brain",
+      "skill_type": "tool",
+      "category": "general",
+      "catalog_type": "core",
+      "config": {}
+    },
+    {
+      "skill_id": "rest-api",
+      "name": "REST API Call",
+      "description": "Make HTTP requests to external APIs \u2014 GET, POST, PUT, PATCH, DELETE",
+      "skill_type": "tool",
+      "category": "general",
+      "catalog_type": "core",
+      "config": {}
+    },
+    {
+      "skill_id": "search-kb",
+      "name": "Knowledge Base",
+      "description": "Search the agent's uploaded documents and knowledge base",
+      "skill_type": "tool",
+      "category": "general",
+      "catalog_type": "core",
+      "config": {}
+    },
+    {
+      "skill_id": "text-to-speech",
+      "name": "Text to Speech",
+      "description": "Convert text to speech audio file using gTTS (free, no API key needed)",
+      "skill_type": "sandbox",
+      "category": "voice",
+      "catalog_type": "core",
+      "config": {}
+    },
+    {
+      "skill_id": "web-search",
+      "name": "Web Search",
+      "description": "Search the web for current information, news, and answers",
+      "skill_type": "tool",
+      "category": "general",
+      "catalog_type": "core",
+      "config": {}
+    },
+    {
+      "skill_id": "xano",
+      "name": "Xano",
+      "description": "Query Xano database tables and call custom API endpoints (read-only)",
+      "skill_type": "sandbox",
+      "category": "productivity",
+      "catalog_type": "addon",
+      "config": {},
+      "config_schema": {
+        "properties": {
+          "query_rules": {
+            "type": "text",
+            "group": "rules",
+            "label": "Query Rules",
+            "description": "Rules and constraints for API calls and queries",
+            "placeholder": "- Always paginate results\n- Default sort by created_at desc\n- Include only active records\n- Never expose sensitive columns (password, ssn)"
+          },
+          "result_limit": {
+            "type": "number",
+            "group": "defaults",
+            "label": "Default Result Limit",
+            "default": 50,
+            "description": "Maximum records to return by default"
+          },
+          "default_table": {
+            "type": "string",
+            "group": "defaults",
+            "label": "Default Table",
+            "description": "Default table name for queries",
+            "placeholder": "clients"
+          },
+          "allowed_tables": {
+            "type": "text",
+            "group": "rules",
+            "label": "Allowed Tables",
+            "description": "Tables the agent is allowed to query (one per line, empty = all)",
+            "placeholder": "clients\nprojects\ninvoices"
+          },
+          "endpoint_rules": {
+            "type": "text",
+            "group": "rules",
+            "label": "Endpoint Rules",
+            "description": "Rules for which endpoints to call and when",
+            "placeholder": "- Use /clientSummary for overview requests\n- Use /clientDetails/{id} for individual lookups\n- Always pass authentication params"
+          },
+          "default_endpoint": {
+            "type": "string",
+            "group": "defaults",
+            "label": "Default Endpoint",
+            "description": "Default API endpoint path for call_endpoint",
+            "placeholder": "/clientSummary"
+          },
+          "response_template": {
+            "type": "text",
+            "group": "templates",
+            "label": "Response Template",
+            "description": "Template for formatting query results",
+            "placeholder": "Found {count} records in {table}:\n{results}\n\nShowing page {page} of {total_pages}."
+          },
+          "default_sort_column": {
+            "type": "string",
+            "group": "defaults",
+            "label": "Default Sort Column",
+            "description": "Column to sort by when not specified",
+            "placeholder": "created_at"
+          },
+          "default_sort_direction": {
+            "type": "select",
+            "group": "defaults",
+            "label": "Default Sort Direction",
+            "default": "desc",
+            "options": [
+              "asc",
+              "desc"
+            ],
+            "description": "Sort direction when not specified"
+          }
+        }
+      },
+      "resource_requirements": [
+        {
+          "name": "Xano Instance Domain",
+          "env_var": "XANO_INSTANCE_DOMAIN",
+          "description": "Your Xano instance domain (e.g. xktx-zdsw-4yq2.n7.xano.io)"
+        },
+        {
+          "name": "Xano API Group Base URL",
+          "env_var": "XANO_API_GROUP_BASE_URL",
+          "description": "Full base URL for the API group (e.g. https://xktx-zdsw-4yq2.n7.xano.io/api:F6QZTCZX)"
+        },
+        {
+          "name": "Xano Metadata API Key",
+          "env_var": "XANO_METADATA_API_KEY",
+          "description": "API key for the Xano Metadata API (for table/schema operations). Found in Instance Settings \u2192 Metadata API."
+        },
+        {
+          "name": "Xano Auth Token",
+          "env_var": "XANO_AUTH_TOKEN",
+          "description": "Bearer token for authenticated custom API endpoints (optional, leave blank if endpoints are public)"
+        }
+      ]
+    }
+  ],
+  "gateways": [
+    {
+      "platform": "facebook-messenger",
+      "name": "Facebook Messenger Gateway",
+      "is_active": true
+    }
+  ],
+  "routines": [],
+  "triggers": [],
+  "mcp_connections": [],
+  "memories": [],
+  "knowledge_base": [],
+  "tools_config": {}
+}
